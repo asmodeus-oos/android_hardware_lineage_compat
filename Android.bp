@@ -345,6 +345,16 @@ cc_library {
     system_ext_specific: true,
 }
 
+cc_library_shared {
+    name: "libgui_shim_shared",
+    defaults: ["libgui_shim_defaults"],
+    shared_libs: [
+        "libgui",
+        "libutils",
+    ],
+    system_ext_specific: true,
+}
+
 cc_library {
     name: "libgui_shim_vendor",
     defaults: ["libgui_shim_defaults"],
@@ -661,6 +671,7 @@ cc_library_shared {
     shared_libs: [
         "android.media.audio.common.types-V5-cpp",
         "audioclient-types-aidl-cpp",
+        "libaudiobase",
         "libaudioclient",
         "libaudiofoundation",
         "libutils",
@@ -1001,6 +1012,30 @@ cc_prebuilt_library_shared {
 }
 
 cc_prebuilt_library_shared {
+    name: "libprotobuf-cpp-full-systemcompat",
+    stem: "libprotobuf-cpp-full",
+    system_ext_specific: true,
+    check_elf_files: false,
+    strip: {
+        none: true,
+    },
+    shared_libs: [
+        "libc++",
+        "liblog",
+        "libz",
+    ],
+    target: {
+        android_arm: {
+            srcs: ["libprotobuf/arm/libprotobuf-cpp-full-21.7.so"],
+        },
+        android_arm64: {
+            srcs: ["libprotobuf/arm64/libprotobuf-cpp-full-21.7.so"],
+        },
+    },
+    compile_multilib: "both",
+}
+
+cc_prebuilt_library_shared {
     name: "libprotobuf-cpp-lite-vendorcompat",
     stem: "libprotobuf-cpp-lite",
     vendor: true,
@@ -1016,6 +1051,26 @@ cc_prebuilt_library_shared {
         },
         android_arm64: {
             srcs: ["vndk/v29/arm64/libprotobuf-cpp-lite.so"],
+        },
+    },
+    compile_multilib: "both",
+}
+
+cc_prebuilt_library_shared {
+    name: "libprotobuf-cpp-lite-systemcompat",
+    stem: "libprotobuf-cpp-lite",
+    system_ext_specific: true,
+    check_elf_files: false,
+    strip: {
+        none: true,
+    },
+    shared_libs: ["libc++"],
+    target: {
+        android_arm: {
+            srcs: ["libprotobuf/arm/libprotobuf-cpp-lite-21.7.so"],
+        },
+        android_arm64: {
+            srcs: ["libprotobuf/arm64/libprotobuf-cpp-lite-21.7.so"],
         },
     },
     compile_multilib: "both",
