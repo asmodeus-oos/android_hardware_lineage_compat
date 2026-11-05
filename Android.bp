@@ -856,6 +856,7 @@ cc_prebuilt_library_shared {
     name: "libprotobuf-cpp-lite-21.7",
     system_ext_specific: true,
     vendor_available: true,
+    check_elf_files: false,
     strip: {
         none: true,
     },
